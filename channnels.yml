@@ -73,6 +73,11 @@
   type: BS
   channel: BS3_1
   serviceId: 104
+- name: ディズニーｃｈ
+  type: BS
+  channel: BS3_2
+  serviceId: 256
+  isDisabled: true
 - name: ＷＯＷＯＷライブ
   type: BS
   channel: BS5_0
@@ -161,6 +166,10 @@
   type: BS
   channel: BS21_2
   serviceId: 245
+- name: テレ朝チャンネル１
+  type: CS
+  channel: CS2
+  serviceId: 298
 - name: テレ朝チャンネル２
   type: CS
   channel: CS2
@@ -173,6 +182,10 @@
   type: CS
   channel: CS8
   serviceId: 349
+- name: 東映チャンネル
+  type: CS
+  channel: CS8
+  serviceId: 218
 - name: スカチャン１
   type: CS
   channel: CS10
@@ -181,6 +194,10 @@
   type: CS
   channel: CS12
   serviceId: 254
+- name: ＡＴ−Ｘ
+  type: CS
+  channel: CS16
+  serviceId: 333
 - name: フジテレビＯＮＥ
   type: CS
   channel: CS20
@@ -189,26 +206,14 @@
   type: CS
   channel: CS20
   serviceId: 308
-- name: ＴＢＳチャンネル２
-  type: CS
-  channel: CS22
-  serviceId: 297
-- name: 日テレジータス
-  type: CS
-  channel: CS24
-  serviceId: 257
-- name: スポーツライブ+
-  type: CS
-  channel: CS10
-  serviceId: 800
-- name: 東映チャンネル
-  type: CS
-  channel: CS8
-  serviceId: 218
 - name: フジテレビＮＥＸＴ
   type: CS
   channel: CS20
   serviceId: 309
+- name: ＴＢＳチャンネル２
+  type: CS
+  channel: CS22
+  serviceId: 297
 - name: ＭＯＮＤＯ　ＴＶ
   type: CS
   channel: CS24
@@ -217,7 +222,7 @@
   type: CS
   channel: CS24
   serviceId: 300
-- name: ＡＴ−Ｘ
+- name: 日テレジータス
   type: CS
-  channel: CS16
-  serviceId: 333
+  channel: CS24
+  serviceId: 257

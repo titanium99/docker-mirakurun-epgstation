@@ -1,16 +1,19 @@
 FROM l3tnun/epgstation:master-debian
 EXPOSE 8888
-ARG CPUCORE="1"
+# rpi4用にcore数変更
+ARG CPUCORE="4"
 ENV DEV="make gcc git g++ automake curl wget autoconf build-essential libass-dev libfreetype6-dev libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texinfo zlib1g-dev"
 ENV FFMPEG_VERSION=4.1
 
+# rpi4ハードウェアエンコードライブラリ追加
 RUN apt-get update && \
     apt-get -y install $DEV && \
-    apt-get -y install yasm libx264-dev libmp3lame-dev libopus-dev libvpx-dev && \
+    apt-get -y install yasm libomxil-bellagio-dev libx264-dev libmp3lame-dev libopus-dev libvpx-dev && \
     apt-get -y install libx265-dev libnuma-dev && \
     apt-get -y install libasound2 libass9 libvdpau1 libva-x11-2 libva-drm2 libxcb-shm0 libxcb-xfixes0 libxcb-shape0 libvorbisenc2 libtheora0 && \
 \
 #ffmpeg build
+# omx用オプション追加
 \
     mkdir /tmp/ffmpeg_sources && \
     cd /tmp/ffmpeg_sources && \
@@ -22,6 +25,8 @@ RUN apt-get update && \
       --disable-shared \
       --pkg-config-flags=--static \
       --enable-gpl \
+      --enable-omx \
+      --enable-omx-rpi \
       --enable-libass \
       --enable-libfreetype \
       --enable-libmp3lame \
