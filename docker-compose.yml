@@ -11,11 +11,15 @@ services:
         volumes:
             - ./mirakurun/conf:/app-config
             - ./mirakurun/data:/app-data
+            - ./mirakurun/opt:/opt/
         environment:
             TZ: "Asia/Tokyo"
         devices:
-            - /dev/bus:/dev/bus
-            - /dev/dvb:/dev/dvb
+            - /dev/px4video0:/dev/px4video0
+            - /dev/px4video1:/dev/px4video1
+            - /dev/px4video2:/dev/px4video2
+            - /dev/px4video3:/dev/px4video3
+            - /dev/bus/usb/001/004
         restart: always
         logging:
             driver: json-file
@@ -51,7 +55,7 @@ services:
             - ./epgstation/data:/app/data
             - ./epgstation/thumbnail:/app/thumbnail
             - ./epgstation/logs:/app/logs
-            - ./recorded:/app/recorded
+            - /mnt/share_hdd/REC:/app/recorded
         environment:
             TZ: "Asia/Tokyo"
         depends_on:

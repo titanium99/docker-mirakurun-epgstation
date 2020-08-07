@@ -5,6 +5,7 @@
 .DS_Store
 /recorded/*
 /mirakurun/data/*
+/mirakurun/opt/*
 /epgstation/thumbnail/*.jpg
 /epgstation/data/streamfiles/*.ts
 /epgstation/data/streamfiles/*.m3u8
@@ -14,4 +15,3 @@
 !/epgstation/config/serviceLogConfig.json
 /epgstation/data/*.json
 !.gitkeep
-/docker-compose.yml
