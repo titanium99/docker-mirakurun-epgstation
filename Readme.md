@@ -4,15 +4,83 @@
 ## 前提条件
 - Docker, docker-compose の導入が必須
 - ホスト上の pcscd は停止する
-- PT3用に設定済みなのでPT3での使用を想定
+- px-w3u4/q3u4での使用を想定
+
+## 事前準備
+### b-casカードリーダーの設定
+```sh
+# ライブラリインストール
+sudo apt install -y libpcsclite-dev pcscd pcsc-tools libccid
+ 
+# IC面が上になるよう、カードの向きに注意してB-casをリーダに挿入。
+$ pcsc_scan
+(略)
+Japanese Chijou Digital B-CAS Card (pay TV)
+# ↑の表示が出たら Ctrl + C で終了
+```
+
+### チューナードライバの設定
+```sh
+# ライブラリインストール
+sudo apt install -y dkms git
+
+mkdir ~/src
+cd ~/src
+git clone https://github.com/nns779/px4_drv
+cd px4_drv/fwtool/
+make
+wget http://plex-net.co.jp/plex/pxw3u4/pxw3u4_BDA_ver1x64.zip -O pxw3u4_BDA_ver1x64.zip
+unzip -oj pxw3u4_BDA_ver1x64.zip pxw3u4_BDA_ver1x64/PXW3U4.sys
+./fwtool PXW3U4.sys it930x-firmware.bin
+sudo mkdir -p /lib/firmware
+sudo cp it930x-firmware.bin /lib/firmware/
+
+
+# カーネルヘッダーのインストール（カーネル変更時）
+uname -r
+sudo apt install -y linux-headers-$(uname -r)
+
+
+# px4_drvドライバのインストール
+cd ~/src/px4_drv/driver/
+make
+sudo make install
+
+cd ~/src/px4_drv
+sudo cp -a ./ /usr/src/px4_drv-0.2.1
+sudo dkms add px4_drv/0.2.1
+sudo dkms install px4_drv/0.2.1
+
+# カーネルモジュールのロードの確認
+lsmod | grep -e ^px4_drv
+#> px4_drv                81920  0
+# px4_drvから始まる行が表示されれば、カーネルモジュールが正常にロードされています
+
+# ホストのb-casカードリーダー停止
+sudo systemctl stop pcscd.socket
+sudo systemctl disable pcscd.socket
+```
+
+### recpt1のインストール
+```sh
+cd ~/src/
+git clone https://github.com/stz2012/recpt1.git
+cd recpt1/recpt1
+./autogen.sh
+./configure --enable-b25
+make
+sudo make install
+```
 
 ## インストール手順
 
 ```sh
 $ git clone https://github.com/l3tnun/docker-mirakurun-epgstation.git
 $ cd docker-mirakurun-epgstation
-$ cp docker-compose-sample.yml docker-compose.yml
-$ cp epgstation/config/config.sample.json epgstation/config/config.json
+$ which recpt1
+/usr/local/bin/recpt1
+$ cp /usr/local/bin/recpt1 ./mirakurun/opt/bin/
+$ vim /usr/local/mirakurun/config/tuners.yml
 $ sudo docker-compose pull
 $ sudo docker-compose build
 
