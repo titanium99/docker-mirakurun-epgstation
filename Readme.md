@@ -60,6 +60,18 @@ lsmod | grep -e ^px4_drv
 sudo systemctl stop pcscd.socket
 sudo systemctl disable pcscd.socket
 ```
+### arib25のインストール
+```sh
+$ wget http://hg.honeyplanet.jp/pt1/archive/c44e16dbb0e2.tar.bz2
+$ tar -xvjf c44e16dbb0e2.tar.bz2
+$ cd pt1-c44e16dbb0e2/arib25/
+$ vim src/Makefile
+　PCSC_CFLAGS ?= `pkg-config libpcsclite –cflags`
+　PCSC_LDLIBS ?= `pkg-config libpcsclite –libs`
+　の「lite」を「kai」とし、保存する
+$ make
+$ sudo make install
+```
 
 ### recpt1のインストール
 ```sh
