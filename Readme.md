@@ -74,13 +74,15 @@ $ make
 
 ### recpt1のインストール
 ```sh
-cd ~/src/
-git clone https://github.com/stz2012/recpt1.git
-cd recpt1/recpt1
-./autogen.sh
-./configure --enable-b25
-make
-sudo make install
+$ cd ~/src/
+$ git clone https://github.com/stz2012/recpt1.git
+$ cd recpt1/recpt1
+$ ./autogen.sh
+# autogen.sh を実行する際エラーでたら下記入れる
+$ sudo apt install autoconf automake
+$ ./configure --enable-b25
+$ make
+$ sudo make install
 ```
 
 ## インストール手順
