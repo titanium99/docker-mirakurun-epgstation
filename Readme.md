@@ -60,17 +60,16 @@ lsmod | grep -e ^px4_drv
 sudo systemctl stop pcscd.socket
 sudo systemctl disable pcscd.socket
 ```
-### arib25のインストール
+### arib25のインストール(docker版は同梱されているので不要)
 ```sh
-$ wget http://hg.honeyplanet.jp/pt1/archive/c44e16dbb0e2.tar.bz2
-$ tar -xvjf c44e16dbb0e2.tar.bz2
-$ cd pt1-c44e16dbb0e2/arib25/
-$ vim src/Makefile
-　PCSC_CFLAGS ?= `pkg-config libpcsclite –cflags`
-　PCSC_LDLIBS ?= `pkg-config libpcsclite –libs`
-　の「lite」を「kai」とし、保存する
+$ mkdir ~/git
+$ cd ~/git
+$ git clone https://github.com/stz2012/libarib25.git
+$ cd libarib25/
+$ cmake .    <--- '.'を忘れずに!!
 $ make
-$ sudo make install
+# sudo make install
+# sudo /sbin/ldconfig
 ```
 
 ### recpt1のインストール
@@ -87,7 +86,7 @@ sudo make install
 ## インストール手順
 
 ```sh
-$ git clone https://github.com/l3tnun/docker-mirakurun-epgstation.git
+$ git clone https://github.com/titaium99/docker-mirakurun-epgstation.git
 $ cd docker-mirakurun-epgstation
 $ which recpt1
 /usr/local/bin/recpt1
